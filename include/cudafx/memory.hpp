@@ -4,7 +4,7 @@
 #include "device_id.hpp"
 #include "misc.hpp"
 
-#include <internal/attribute.hpp>
+#include "internal/attribute.hpp"
 
 namespace cufx
 {
