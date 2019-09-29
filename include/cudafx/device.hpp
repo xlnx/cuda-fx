@@ -6,7 +6,7 @@
 #include "image.hpp"
 #include "array.hpp"
 
-namespace cuda
+namespace cufx
 {
 struct Device : DeviceId
 {
@@ -36,8 +36,8 @@ public:
 	std::pair<GlobalMemory, MemoryView2D<Pixel>> alloc_image_swap( Image<Pixel> const &img ) const
 	{
 		auto img_view = img.view();
-		cuda::GlobalMemory mem( img_view.width() * img_view.height() * sizeof( Pixel ), *this );
-		auto view_info = cuda::MemoryView2DInfo{}
+		cufx::GlobalMemory mem( img_view.width() * img_view.height() * sizeof( Pixel ), *this );
+		auto view_info = cufx::MemoryView2DInfo{}
 						   .set_stride( img_view.width() * sizeof( Pixel ) )
 						   .set_width( img_view.width() )
 						   .set_height( img_view.height() );
@@ -50,4 +50,4 @@ private:
 	  DeviceId( _ ) {}
 };
 
-}  // namespace cuda
+}  // namespace cufx

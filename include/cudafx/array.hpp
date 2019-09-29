@@ -4,7 +4,7 @@
 #include "device_id.hpp"
 #include "misc.hpp"
 
-namespace cuda
+namespace cufx
 {
 namespace _
 {
@@ -104,5 +104,5 @@ using Array2D = ArrayND<E, 2>;
 template <typename E>
 using Array3D = ArrayND<E, 3>;
 
-}  // namespace cuda
+}  // namespace cufx
 

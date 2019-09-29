@@ -4,7 +4,7 @@
 #include "memory.hpp"
 #include "array.hpp"
 
-namespace cuda
+namespace cufx
 {
 namespace _
 {
@@ -144,4 +144,4 @@ Task memory_transfer( ArrayND<T, N> const &dst, MemoryViewND<T, N> const &src )
 	return _::ArrayTrans<T, N>::transfer( dst, src );
 }
 
-}  // namespace cuda
+}  // namespace cufx

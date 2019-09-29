@@ -4,9 +4,9 @@
 #include "device_id.hpp"
 #include "misc.hpp"
 
-#include <utils/attribute.hpp>
+#include <internal/attribute.hpp>
 
-namespace cuda
+namespace cufx
 {
 struct GlobalMemory;
 
@@ -23,7 +23,7 @@ struct MemoryViewND
 protected:
 	cudaPitchedPtr _ = { 0 };
 	DeviceId device = DeviceId{ -1 };
-	friend struct cuda::GlobalMemory;
+	friend struct cufx::GlobalMemory;
 };
 }  // namespace _
 
@@ -88,7 +88,7 @@ struct MemoryViewND<T, 3> : _::MemoryViewND<T, 3>
 
 public:
 	MemoryViewND() = default;
-	MemoryViewND( void *ptr, MemoryView2DInfo const &info, cuda::Extent dim ) :
+	MemoryViewND( void *ptr, MemoryView2DInfo const &info, cufx::Extent dim ) :
 	  dim( dim )
 	{
 		this->_ = make_cudaPitchedPtr( ptr, info.stride,
@@ -96,13 +96,13 @@ public:
 	}
 
 private:
-	cuda::Extent dim;
+	cufx::Extent dim;
 };
 
 struct GlobalMemory
 {
 private:
-	struct Inner : NoCopy, NoMove
+	struct Inner : vm::NoCopy, vm::NoMove
 	{
 		~Inner() { cudaFree( _ ); }
 
@@ -141,4 +141,4 @@ using MemoryView2D = MemoryViewND<T, 2>;
 template <typename T>
 using MemoryView3D = MemoryViewND<T, 3>;
 
-}  // namespace cuda
+}  // namespace cufx

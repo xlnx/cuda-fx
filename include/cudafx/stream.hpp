@@ -9,9 +9,9 @@
 #include <chrono>
 #include <cuda_runtime.h>
 
-#include <utils/concepts.hpp>
+#include <VMUtils/concepts.hpp>
 
-namespace cuda
+namespace cufx
 {
 enum class Poll : uint32_t
 {
@@ -75,7 +75,7 @@ inline std::ostream &operator<<( std::ostream &os, Result stat )
 struct Event
 {
 private:
-	struct Inner : NoCopy, NoMove
+	struct Inner : vm::NoCopy, vm::NoMove
 	{
 		~Inner() { cudaEventDestroy( _ ); }
 
@@ -109,7 +109,7 @@ private:
 struct Stream
 {
 private:
-	struct Inner : NoCopy, NoMove
+	struct Inner : vm::NoCopy, vm::NoMove
 	{
 		~Inner()
 		{
@@ -123,7 +123,7 @@ private:
 	Stream( std::nullptr_t ) {}
 
 public:
-	struct Lock : NoCopy, NoHeap
+	struct Lock : vm::NoCopy, vm::NoHeap
 	{
 		Lock( Inner &stream ) :
 		  stream( stream ),
@@ -152,7 +152,7 @@ private:
 	std::shared_ptr<Inner> _ = std::make_shared<Inner>();
 };
 
-struct Task : NoCopy
+struct Task : vm::NoCopy
 {
 	Task() = default;
 	Task( std::function<void( cudaStream_t )> &&_ ) :
@@ -207,4 +207,4 @@ private:
 	std::vector<std::future<Result>> _;
 };
 
-}  // namespace cuda
+}  // namespace cufx

@@ -1,13 +1,13 @@
 #pragma once
 
 #include <iostream>
-#include <stb/stb_image_write.h>
+// #include <stb/stb_image_write.h>
 
 #include "memory.hpp"
 #include "transfer.hpp"
-#include <utils/attribute.hpp>
+#include <internal/attribute.hpp>
 
-namespace cuda
+namespace cufx
 {
 struct Rect
 {
@@ -62,7 +62,7 @@ private:
 };
 
 template <typename Pixel = uchar4>
-struct Image final : NoCopy
+struct Image final : vm::NoCopy
 {
 	Image( std::size_t width, std::size_t height ) :
 	  width( width ),
@@ -123,7 +123,7 @@ public:
 				at( j, i ).write_to( reinterpret_cast<unsigned char *>( pixel_ptr ) );
 			}
 		}
-		stbi_write_png( file_name.c_str(), width, height, 4, buffer, width * 4 );
+		// stbi_write_png( file_name.c_str(), width, height, 4, buffer, width * 4 );
 	}
 
 private:
@@ -131,11 +131,11 @@ private:
 	Pixel *pixels;
 };
 
-template <>
-inline void Image<>::dump( std::string const &file_name ) const
-{
-	stbi_write_png( file_name.c_str(), width, height, 4,
-					reinterpret_cast<unsigned char *>( pixels ), width * 4 );
-}
+// template <>
+// inline void Image<>::dump( std::string const &file_name ) const
+// {
+// 	stbi_write_png( file_name.c_str(), width, height, 4,
+// 					reinterpret_cast<unsigned char *>( pixels ), width * 4 );
+// }
 
-}  // namespace cuda
+}  // namespace cufx

@@ -2,14 +2,14 @@
 
 #include <cuda_runtime.h>
 
-#include <utils/concepts.hpp>
+#include <VMUtils/concepts.hpp>
 
-namespace cuda
+namespace cufx
 {
 struct DeviceId
 {
 private:
-	struct Lock : NoCopy, NoHeap
+	struct Lock : vm::NoCopy, vm::NoHeap
 	{
 		Lock( int _ ) :
 		  _( _ ) {}
@@ -49,4 +49,4 @@ private:
 	int _;
 };
 
-}  // namespace cuda
+}  // namespace cufx

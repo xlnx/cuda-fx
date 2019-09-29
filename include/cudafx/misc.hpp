@@ -2,10 +2,10 @@
 
 #include <cuda_runtime.h>
 
-#include <utils/attribute.hpp>
-#include <utils/format.hpp>
+#include <internal/attribute.hpp>
+#include <internal/format.hpp>
 
-namespace cuda
+namespace cufx
 {
 struct Extent
 {
@@ -18,7 +18,7 @@ public:
 	cudaExtent get() const { return make_cudaExtent( width, height, depth ); }
 };
 
-}  // namespace cuda
+}  // namespace cufx
 
 #define CUFX_DEFINE_VECTOR1234_FMT( T ) \
 	CUFX_DEFINE_VECTOR1_FMT( T##1, x )       \
@@ -39,5 +39,5 @@ CUFX_DEFINE_VECTOR1234_FMT( ulonglong )
 CUFX_DEFINE_VECTOR1234_FMT( float )
 CUFX_DEFINE_VECTOR1234_FMT( double )
 CUFX_DEFINE_VECTOR3_FMT( dim3, x, y, z )
-CUFX_DEFINE_VECTOR3_FMT( cuda::Extent, width, height, depth )
+CUFX_DEFINE_VECTOR3_FMT( cufx::Extent, width, height, depth )
 CUFX_DEFINE_VECTOR3_FMT( cudaExtent, width, height, depth )

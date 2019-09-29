@@ -1,9 +1,9 @@
 #pragma once
 
-namespace cuda
+namespace cufx
 {
 struct Profiler
 {
 };
 
-}  // namespace cuda
+}  // namespace cufx

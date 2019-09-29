@@ -4,7 +4,7 @@
 #include "device_id.hpp"
 #include <utils/attribute.hpp>
 
-namespace cuda
+namespace cufx
 {
 struct KernelLaunchInfo
 {
@@ -62,7 +62,7 @@ struct Functionlify<Ret ( *const )( Args... )> : Functionlify<Ret( Args... )>
   struct __Kernel_Impl_##name;                                                 \
   template <typename Ret, typename... Args>                                    \
   struct __Kernel_Impl_##name<Ret(Args...)> {                                  \
-    static void launch(vol::cuda::KernelLaunchInfo const &info, Args... args,  \
+    static void launch(vol::cufx::KernelLaunchInfo const &info, Args... args,  \
                        cudaStream_t stream) {                                  \
       auto lock = info.device.lock();                                          \
       impl<<<info.grid_dim, info.block_dim, info.shm_per_block, stream>>>      \
@@ -70,13 +70,13 @@ struct Functionlify<Ret ( *const )( Args... )> : Functionlify<Ret( Args... )>
     }                                                                          \
   };                                                                           \
   }                                                                            \
-  ::vol::cuda::Kernel<                                                         \
-      typename ::vol::cuda::Functionlify<decltype(impl)>::type>                \
+  ::vol::cufx::Kernel<                                                         \
+      typename ::vol::cufx::Functionlify<decltype(impl)>::type>                \
   name(__Kernel_Impl_##name<                                                   \
-      typename ::vol::cuda::Functionlify<decltype(impl)>::type>::launch)
+      typename ::vol::cufx::Functionlify<decltype(impl)>::type>::launch)
 /* clang-format on */
 
 // #define VOL_CUDA_DEVICE __device__
 // #define VOL_CUDA_DEVICE __device__
 
-}  // namespace cuda
+}  // namespace cufx
