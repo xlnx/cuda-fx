@@ -28,6 +28,8 @@ private:
 		int _;
 	};
 
+	using Props = cudaDeviceProp;
+
 public:
 	int id() const { return _; }
 	bool is_host() const { return _ < 0; }
@@ -40,6 +42,12 @@ public:
 			cudaSetDevice( _ );
 		}
 		return Lock( d );
+	}
+	Props props() const
+	{
+		Props val;
+		cudaGetDeviceProperties( &val, _ );
+		return val;
 	}
 
 	explicit DeviceId( int _ = 0 ) :

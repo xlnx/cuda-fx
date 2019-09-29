@@ -2,8 +2,8 @@
 
 #include <cuda_runtime.h>
 
-#include <internal/attribute.hpp>
-#include <internal/format.hpp>
+#include "internal/attribute.hpp"
+#include "internal/format.hpp"
 
 namespace cufx
 {

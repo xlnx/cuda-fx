@@ -5,7 +5,7 @@
 
 #include "memory.hpp"
 #include "transfer.hpp"
-#include <internal/attribute.hpp>
+#include "internal/attribute.hpp"
 
 namespace cufx
 {
