@@ -1,14 +1,15 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.0)
 set(CMAKE_CXX_STANDARD 14)
 project(vmutils)
 
 option(CUDAFX_BUILD_TESTS "Set to ON to build tests" OFF)
 
 include(external.cmake)
-add_external_module(
+vm_external_module(
   GIT_REPOSITORY https://github.com/cad420/VMUtils
   GIT_TAG        master
 )
+include(export.cmake)
 
 if (CUDAFX_BUILD_TESTS)
   find_package(GTest REQUIRED)
@@ -33,16 +34,14 @@ if (CUDAFX_BUILD_TESTS)
     -lineinfo
     -Xcudafe --display_error_number
   )
-  cuda_add_executable(cudafx_test_all ${CUDAFX_TEST_SOURCES})
+  add_executable(cudafx_test_all ${CUDAFX_TEST_SOURCES})
+  vm_target_dependency(cudafx_test_all cudafx PRIVATE)
   if (CMAKE_CXX_COMPILER MATCHES MSVC)
   else()
     target_link_libraries(cudafx_test_all pthread)
   endif()
-  target_link_libraries(cudafx_test_all gtest_main gtest)
-  target_include_directories(cudafx_test_all PRIVATE 
-    "include/cudafx"
-    "${CMAKE_BINARY_DIR}/external/VMUtils/include"
-  )
+  target_link_libraries(cudafx_test_all gtest gtest_main)
   # include(GoogleTest)
   # gtest_add_tests(cudafx_test_all "" AUTO)
 endif()
+

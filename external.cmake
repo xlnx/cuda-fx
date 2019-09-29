@@ -1,4 +1,15 @@
-function(add_external_module)
+function(vm_target_dependency a b access)
+  add_dependencies(${a} ${b})
+  get_target_property(include ${b} INTERFACE_INCLUDE_DIRECTORIES)
+  target_include_directories(${a} ${access} ${include})
+  get_target_property(type ${b} TYPE)
+  if(NOT "${type}" STREQUAL "INTERFACE_LIBRARY")
+    get_target_property(static ${b} LINK_LIBRARIES)
+    target_link_libraries(${a} ${static})
+  endif()
+endfunction() 
+
+function(vm_external_module)
 
   function(checkout_external_module repo_url tag)
     string(REPLACE "/" ";" repo_url_arr ${repo_url})

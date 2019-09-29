@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <device.hpp>
+#include <cudafx/device.hpp>
 
 TEST(test_device, test_device)
 {
