@@ -4,13 +4,19 @@ project(vmutils)
 
 option(CUDAFX_BUILD_TESTS "Set to ON to build tests" OFF)
 
-include(external.cmake)
+# install build scripts
+find_package(Git)
+execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive)
+# install external modules
+include(scripts/external.cmake)
 vm_external_module(
   GIT_REPOSITORY https://github.com/cad420/VMUtils
   GIT_TAG        master
 )
+# export targets
 include(export.cmake)
 
+# build tests
 if (CUDAFX_BUILD_TESTS)
   find_package(GTest REQUIRED)
   file(GLOB_RECURSE CUDAFX_TEST_SOURCES
